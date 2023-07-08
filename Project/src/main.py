@@ -14,7 +14,7 @@ if not os.path.exists('TrainedAutoencoder'):
 
 # Step 1: Preprocess the data
 # Create an instance of DataPreprocessor
-data_preprocessor = DataPreprocessor(filepath='Dataset/data.csv')
+data_preprocessor = DataPreprocessor(filepath='Project/Dataset/data.csv')
 
 dataset = data_preprocessor.load_data()
 print("Initial dataset:")
