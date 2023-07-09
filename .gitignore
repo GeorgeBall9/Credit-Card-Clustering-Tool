@@ -66,3 +66,7 @@ Plots/clusters.png
 TrainedAutoencoder/trained_autoencoder.h5
 *.png
 .png
+*.jpg
+*.jpeg
+*.png
+*.gif
