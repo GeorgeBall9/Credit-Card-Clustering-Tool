@@ -61,3 +61,6 @@ benchmark
 !benchmark/*/prompt
 
 .gpte_consent
+Plots/sse_plot.png
+Plots/clusters.png
+TrainedAutoencoder/trained_autoencoder.h5
