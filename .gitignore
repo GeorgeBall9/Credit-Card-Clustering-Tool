@@ -71,3 +71,5 @@ Plots/*.png
 *.jpeg
 *.png
 *.gif
+Plots/clusters.png
+Plots/sse_plot.png
