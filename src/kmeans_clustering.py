@@ -7,7 +7,7 @@ from sklearn.metrics import silhouette_score
 from sklearn.metrics import davies_bouldin_score
 
 class KMeansClustering:
-    def __init__(self, dataset: pd.DataFrame, n_clusters: int = 6):
+    def __init__(self, dataset: pd.DataFrame, n_clusters: int = 3):
         self.dataset = dataset
         self.n_clusters = n_clusters
         self.model = KMeans(n_clusters=self.n_clusters)
