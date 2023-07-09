@@ -64,3 +64,5 @@ benchmark
 Plots/sse_plot.png
 Plots/clusters.png
 TrainedAutoencoder/trained_autoencoder.h5
+*.png
+.png
