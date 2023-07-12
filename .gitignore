@@ -74,3 +74,4 @@ Plots/*.png
 Plots/clusters.png
 Plots/sse_plot.png
 Plots/
+TrainedAutoencoder/
