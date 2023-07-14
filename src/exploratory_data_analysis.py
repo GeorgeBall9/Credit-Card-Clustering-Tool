@@ -76,21 +76,21 @@ class EDA:
         axes[0].plot(purchases_data['min'], purchases_data['TENURE'], 'o', color=color_palette[0], markersize=10, label='Min')
         axes[0].plot(purchases_data['mean'], purchases_data['TENURE'], 'o', color=color_palette[1], markersize=10, label='Mean')
         axes[0].plot(purchases_data['max'], purchases_data['TENURE'], 'o', color=color_palette[2], markersize=10, label='Max')
-        axes[0].set_title('Customer Purchases Amount', fontweight='bold')
+        axes[0].set_title('Customer Purchases Amount', fontweight='bold', fontstyle='italic', fontsize=12)
         axes[0].set_xlabel('PURCHASES', fontweight='bold')
         axes[0].set_ylabel('TENURE', fontweight='bold')
 
         # Add mean and max labels
         for i in range(len(purchases_data)):
-            axes[0].text(purchases_data.loc[i, 'mean'], purchases_data.loc[i, 'TENURE'] + 0.2, f"{purchases_data.loc[i, 'mean']:.2f}", va='center', ha='center', color=color_palette[1], fontsize=8, fontweight='bold')
-            axes[0].text(purchases_data.loc[i, 'max'], purchases_data.loc[i, 'TENURE'] + 0.2, f"{purchases_data.loc[i, 'max']:.2f}", va='center', ha='center', color=color_palette[2], fontsize=8, fontweight='bold')
+            axes[0].text(purchases_data.loc[i, 'mean'], purchases_data.loc[i, 'TENURE'] + 0.15, f"{purchases_data.loc[i, 'mean']:.2f}", va='center', ha='center', color=color_palette[1], fontsize=8, fontweight='bold')
+            axes[0].text(purchases_data.loc[i, 'max'], purchases_data.loc[i, 'TENURE'] + 0.15, f"{purchases_data.loc[i, 'max']:.2f}", va='center', ha='center', color=color_palette[2], fontsize=8, fontweight='bold')
 
         # Plot PURCHASES_TRX vs TENURE
         axes[1].hlines(purchases_trx_data['TENURE'], purchases_trx_data['min'], purchases_trx_data['max'], color='black')
         axes[1].plot(purchases_trx_data['min'], purchases_trx_data['TENURE'], 'o', color=color_palette[0], markersize=10, label='Min')
         axes[1].plot(purchases_trx_data['mean'], purchases_trx_data['TENURE'], 'o', color=color_palette[1], markersize=10, label='Mean')
         axes[1].plot(purchases_trx_data['max'], purchases_trx_data['TENURE'], 'o', color=color_palette[2], markersize=10, label='Max')
-        axes[1].set_title('Total Purchase Transcations', fontweight='bold')
+        axes[1].set_title('Total Purchase Transcations', fontweight='bold', fontstyle='italic', fontsize=12)
         axes[1].set_xlabel('PURCHASES_TRX', fontweight='bold')
         axes[1].set_ylabel('TENURE', fontweight='bold')
 
