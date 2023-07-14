@@ -1,4 +1,5 @@
 import os
+from exploratory_data_analysis import EDA
 from data_preprocessor import DataPreprocessor
 from autoencoder_trainer import AutoencoderTrainer
 from kmeans_clustering import KMeansClustering
@@ -20,12 +21,22 @@ dataset = data_preprocessor.load_data()
 print("Initial dataset:")
 print(dataset.head())
 
+# Drop the CUST_ID column
+dataset = data_preprocessor.drop_columns(dataset)
+
+# Create an instance of EDA and perform EDA
+eda = EDA(dataset)
+eda.check_missing_values()
+eda.plot_correlation_heatmap()
+eda.plot_pairplot()
+eda.plot_credit_limit_vs_balance()
+
 null_values = dataset.isnull().sum()
 null_values = null_values[null_values > 0]
 print("\nNull values in dataset:")
 print(null_values)
 
-dataset = data_preprocessor.drop_columns(dataset)
+
 print("\nDataset after dropping columns:")
 print(dataset.head())
 
