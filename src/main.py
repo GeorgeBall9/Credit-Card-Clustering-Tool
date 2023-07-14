@@ -30,6 +30,7 @@ eda.check_missing_values()
 eda.plot_correlation_heatmap()
 eda.plot_pairplot()
 eda.plot_credit_limit_vs_balance()
+eda.plot_purchases_vs_tenure()
 
 null_values = dataset.isnull().sum()
 null_values = null_values[null_values > 0]
