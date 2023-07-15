@@ -1,5 +1,6 @@
 import pandas as pd
 import seaborn as sns
+import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
 
@@ -15,8 +16,13 @@ class EDA:
     def plot_correlation_heatmap(self):
         # Plot a correlation heatmap
         corr = self.dataset.corr()
-        plt.figure(figsize=(10, 8))
-        sns.heatmap(corr, annot=True, fmt=".2f")
+        mask = np.triu(np.ones_like(corr, dtype=bool))  # Create a mask for the upper triangle
+
+        fig = plt.subplots(figsize=(18, 12))
+        sns.heatmap(corr, mask=mask, annot=True, fmt=".2f", cmap='mako', linewidths=0.1, cbar=False, annot_kws={"size":8})
+        
+        plt.suptitle('Correlation Map of Numerical Variables', fontweight='bold', x=0.327, y=0.96, ha='left', fontsize=13)
+            
         plt.savefig('Plots/correlation.png')  # save the plot as a .png file
         plt.close()  # close the plot
 
@@ -38,7 +44,11 @@ class EDA:
         # Main scatter plot comparing the CREDIT_LIMIT vs BALANCE based on TENURE
         ax_main = fig.add_subplot(gs[:, 0])
         sns.scatterplot(data=self.dataset, x='CREDIT_LIMIT', y='BALANCE', hue='TENURE', palette=color_palette, ax=ax_main, edgecolor=None)
-        ax_main.set_title('CREDIT_LIMIT vs BALANCE based on TENURE')
+        ax_main.set_title('Credit Limit vs. Balance based on Tenure', fontweight='bold', fontsize=20)
+        
+        # Make x and y axis labels bold
+        ax_main.xaxis.label.set_fontweight('bold')
+        ax_main.yaxis.label.set_fontweight('bold')
 
         # Subplots for each unique value of TENURE
         for i, tenure in enumerate(unique_tenures):
@@ -47,7 +57,6 @@ class EDA:
             other = self.dataset[self.dataset['TENURE'] != tenure]
             sns.scatterplot(data=other, x='CREDIT_LIMIT', y='BALANCE', ax=ax_sub, color='lightgrey', alpha=0.2, edgecolor=None)
             sns.scatterplot(data=subset, x='CREDIT_LIMIT', y='BALANCE', ax=ax_sub, label=f'TENURE: {tenure}', color=color_palette[i], edgecolor="black")
-            ax_sub.set_title(f'TENURE: {tenure}', fontsize=8)  # Adjust the font size here
             ax_sub.set_xlabel('')
             ax_sub.set_ylabel('')
             ax_sub.set_xticks([])
@@ -100,7 +109,7 @@ class EDA:
             axes[1].text(purchases_trx_data.loc[i, 'max'], purchases_trx_data.loc[i, 'TENURE'] + 0.2, f"{purchases_trx_data.loc[i, 'max']:.2f}", va='top', ha='center', color=color_palette[2], fontsize=8, fontweight='bold')
 
         # Set the overall title and legend
-        plt.suptitle('Purchases Amount and Total Purchase Transaction Comparison', fontsize=14, fontweight='bold')
+        plt.suptitle('Purchases Amount and Total Purchase Transaction vs. Tenure Comparison', fontsize=14, fontweight='bold')
         axes[0].legend()
         axes[1].legend()
         
