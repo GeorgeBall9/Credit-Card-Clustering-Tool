@@ -13,6 +13,11 @@ class DataPreprocessor:
         dataset = pd.read_csv(self.filepath)
         return dataset
     
+    def check_missing_values(self, dataset: pd.DataFrame):
+        # Check for missing values in the dataset
+        missing_values = dataset.isnull().sum()
+        print("Missing values in each column:\n", missing_values)
+    
     def impute_missing_values(self, dataset: pd.DataFrame) -> pd.DataFrame:
         dataset.fillna(dataset.mean(), inplace=True)
         return dataset

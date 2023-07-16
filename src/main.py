@@ -25,17 +25,11 @@ dataset = data_preprocessor.load_data()
 print("Initial dataset:")
 print(dataset.head())
 
+# Check for missing values
+data_preprocessor.check_missing_values(dataset)
+
 # Drop the CUST_ID column
 dataset = data_preprocessor.drop_columns(dataset)
-
-# Create an instance of EDA and perform EDA
-eda = EDA(dataset)
-eda.check_missing_values()
-eda.plot_correlation_heatmap()
-eda.plot_pairplot()
-eda.plot_credit_limit_vs_balance()
-eda.plot_credit_limit_vs_installment()
-eda.plot_purchases_vs_tenure()
 
 null_values = dataset.isnull().sum()
 null_values = null_values[null_values > 0]
@@ -53,6 +47,15 @@ print(dataset.head())
 normalised_dataset = data_preprocessor.normalise_data(dataset)
 print("\nNormalised dataset:")
 print(normalised_dataset.head())
+
+
+# Create an instance of EDA and perform EDA
+eda = EDA(dataset)
+eda.plot_correlation_heatmap()
+eda.plot_credit_limit_vs_balance()
+eda.plot_credit_limit_vs_installment()
+eda.plot_purchases_vs_tenure()
+
 
 # Step : Perform RFM Analysis
 rfm_analysis = RFMAnalysis(dataset)
