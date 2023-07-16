@@ -8,11 +8,6 @@ class EDA:
     def __init__(self, dataset: pd.DataFrame):
         self.dataset = dataset
 
-    def check_missing_values(self):
-        # Check for missing values in the dataset
-        missing_values = self.dataset.isnull().sum()
-        print("Missing values in each column:\n", missing_values)
-
     def plot_correlation_heatmap(self):
         # Plot a correlation heatmap
         corr = self.dataset.corr()
@@ -33,11 +28,6 @@ class EDA:
         plt.savefig('Plots/heatmap_correlation.png')  # save the plot as a .png file
         plt.close()  # close the plot
 
-    def plot_pairplot(self):
-        # Plot a pairplot to visualise the pairwise relationships between different features
-        sns.pairplot(self.dataset)
-        plt.savefig('Plots/pairplot.png')  # save the plot as a .png file
-        plt.close()  # close the plot
 
     def plot_credit_limit_vs_balance(self):
         # Create a figure and a grid of subplots
