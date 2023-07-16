@@ -15,7 +15,20 @@ class DataPreprocessor:
     
     # Histogram plot of data variables for intial look at dataset
     def plot_histograms(self, dataset: pd.DataFrame):
-        dataset.hist(bins=50, figsize=(26,24))
+        # Set the font
+        font = {'family' : 'serif'}
+        plt.rc('font', **font)
+        
+        # Create a figure
+        fig = plt.figure(figsize=(26,24))
+        
+        # Create histograms for each column in the dataset
+        dataset.hist(bins=50, figsize=(26,24), color='aquamarine')
+        
+        # Set the main title 
+        plt.suptitle("Histogram representation of each variable", fontsize=22, fontweight='bold', fontfamily='serif')
+        
+        # Save the figure
         plt.savefig('Plots/histograms.png')
         plt.close()
     
