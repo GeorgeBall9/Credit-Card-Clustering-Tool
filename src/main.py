@@ -64,9 +64,9 @@ print(rfm_values)  # print RFM values
 autoencoder_trainer = AutoencoderTrainer(normalised_dataset)
 
 # Check if a trained model already exists
-if os.path.exists('TrainedAutoencoder/trained_autoencoder.h5'):
+if os.path.exists('TrainedAutoencoder/best_model.h5'):
     # If it does, load the model
-    autoencoder_trainer.load_model('TrainedAutoencoder/trained_autoencoder.h5')
+    autoencoder_trainer.load_model('TrainedAutoencoder/best_model.h5')
 else:
     # If it doesn't, build and train a new model
     autoencoder = autoencoder_trainer.build_autoencoder()
@@ -74,7 +74,8 @@ else:
     print("Starting training...")
     trained_autoencoder = autoencoder_trainer.train_autoencoder(autoencoder)
     print("Training complete.")
-    autoencoder_trainer.save_model('TrainedAutoencoder/trained_autoencoder.h5')  # Save the model to a file
+    
+autoencoder_trainer.reconstruction_error()
 
 # Use the autoencoder to encode the data
 encoded_data = autoencoder_trainer.encode_data(autoencoder_trainer.autoencoder)
@@ -88,6 +89,7 @@ kmeans_clustering.inertia_plot()
 kmeans_clustering.fit_model()
 kmeans_clustering.silhouette_score()
 kmeans_clustering.davies_bouldin_index() 
+kmeans_clustering.cluster_properties()
 kmeans_clustering.visualise_clusters()
 
 

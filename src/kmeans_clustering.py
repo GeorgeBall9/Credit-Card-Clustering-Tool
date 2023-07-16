@@ -8,10 +8,10 @@ from sklearn.metrics import davies_bouldin_score
 
 
 class KMeansClustering:
-    def __init__(self, dataset: pd.DataFrame, n_clusters: int = 4):
+    def __init__(self, dataset: pd.DataFrame, n_clusters: int = 5, random_state: int = 42):
         self.dataset = dataset
         self.n_clusters = n_clusters
-        self.model = KMeans(n_clusters=self.n_clusters)
+        self.model = KMeans(n_clusters=self.n_clusters, random_state=random_state)
 
     def inertia_plot(self, max_clusters: int = 10):
         inertia = []
@@ -45,6 +45,10 @@ class KMeansClustering:
         dbi = davies_bouldin_score(self.dataset, self.model.labels_)
         print(f"Davies-Bouldin Index: {dbi}")
         return dbi
+    
+    def cluster_properties(self):
+        cluster_props = self.dataset_df.groupby('Cluster').mean()
+        print(cluster_props)
 
     def visualise_clusters(self):
         plt.scatter(

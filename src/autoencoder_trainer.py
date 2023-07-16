@@ -3,6 +3,8 @@ import pandas as pd
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras.models import load_model
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+
 
 
 class AutoencoderTrainer:
@@ -12,7 +14,7 @@ class AutoencoderTrainer:
 
     def build_autoencoder(self) -> keras.Model:
         input_dim = self.dataset.shape[1]
-        encoding_dim = input_dim // 2
+        encoding_dim = 2
 
         input_layer = keras.Input(shape=(input_dim,))
         encoded = keras.layers.Dense(encoding_dim, activation='relu')(input_layer)
@@ -24,8 +26,23 @@ class AutoencoderTrainer:
         return self.autoencoder
 
     def train_autoencoder(self, autoencoder: keras.Model) -> keras.Model:
-        autoencoder.fit(self.dataset, self.dataset, epochs=100, batch_size=32, verbose=1)
+        early_stopping = EarlyStopping(monitor='val_loss', patience=10)
+        model_checkpoint = ModelCheckpoint('TrainedAutoencoder/best_model.h5', monitor='val_loss', save_best_only=True)
+
+        autoencoder.fit(self.dataset, self.dataset,
+                        epochs=110,
+                        batch_size=32,
+                        validation_split=0.2,
+                        callbacks=[early_stopping, model_checkpoint],
+                        verbose=1)
         return autoencoder
+    
+    def reconstruction_error(self):
+        if self.autoencoder is None:
+            raise Exception("Autoencoder not built. Cannot calculate reconstruction error")
+        reconstructed_data = self.autoencoder.predict(self.dataset)
+        mse = np.mean(np.power(self.dataset - reconstructed_data, 2), axis=1)
+        print(f"Mean Squared Error: {np.mean(mse)}")
 
     def encode_data(self, autoencoder: keras.Model) -> np.ndarray:
         encoder = keras.Model(autoencoder.input, autoencoder.layers[1].output)
