@@ -6,7 +6,7 @@ from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score, davies_bouldin_score, calinski_harabasz_score
 from yellowbrick.cluster import SilhouetteVisualizer
 from pywaffle import Waffle
-
+from matplotlib.lines import Line2D
 
 
 class KMeansClustering:
@@ -80,7 +80,7 @@ class KMeansClustering:
     
         
     def visualise_clusters(self):
-        cluster_colors=['#FFBB00', '#3C096C', '#9D4EDD', '#FFE270','#42f593']
+        cluster_colors=sns.color_palette('mako', n_colors=self.n_clusters)  # use the 'mako' color scheme
         labels = ['Cluster 1', 'Cluster 2', 'Cluster 3', 'Cluster 4', 'Cluster 5', 'Centroids']
         title=dict(fontsize=12, fontweight='bold', style='italic', fontfamily='serif')
         text_style=dict(fontweight='bold', fontfamily='serif')
@@ -91,7 +91,7 @@ class KMeansClustering:
         ax1, ax2, ax3, ax4 = axs.flatten()  # flatten the 2D array of AxesSubplot objects
 
         # Silhouette plot
-        s_viz = SilhouetteVisualizer(self.model, colors='yellowbrick', ax=ax1)
+        s_viz = SilhouetteVisualizer(self.model, colors='mako', ax=ax1)
         s_viz.fit(self.dataset)
 
         # Scatter plot of the cluster distributions
@@ -99,14 +99,21 @@ class KMeansClustering:
             self.dataset_df.iloc[:, 0],
             self.dataset_df.iloc[:, 1],
             c=self.dataset_df["Cluster"],
-            cmap="viridis",
+            cmap="mako",
+            edgecolor='black'
         )
         ax2.scatter(
             self.model.cluster_centers_[:, 0],
             self.model.cluster_centers_[:, 1],
-            s=300,
+            s=200,
             c="red",
+            edgecolor='black'
         )
+        # Create a legend for the scatter plot
+        legend_elements = [Line2D([0], [0], marker='o', color='w', label=label,
+                                  markerfacecolor=color, markersize=10) for label, color in zip(labels, cluster_colors)]
+        legend2 = ax2.legend(handles=legend_elements, loc="best")
+        ax2.add_artist(legend2)
 
         # Waffle chart
         ax3=plt.subplot(2, 2, (3,4))
@@ -116,13 +123,15 @@ class KMeansClustering:
         wfl_square = {key: value/100 for key, value in df_waffle.items()}
         wfl_label = {key: round(value/total*100, 2) for key, value in df_waffle.items()}
         Waffle.make_waffle(ax=ax3, rows=6, values=wfl_square, colors=cluster_colors, 
-                        labels=[f"Cluster {i+1} - ({k}%)" for i, k in wfl_label.items()], icon_size=30, 
+                        labels=[f"Cluster {i+1} - ({k}%)" for i, k in wfl_label.items()], 
                         legend={'loc': 'upper center', 'bbox_to_anchor': (0.5, -0.05), 'ncol': 5, 'borderpad': 2, 
                                 'frameon': False, 'fontsize':10})
+        ax3.text(0.01, -0.09, '** 1 square ≈ 100 customers', weight = 'bold', style='italic', fontsize=8)
         
         ax4.axis('off')  # turn off the fourth subplot
-
         
+        plt.suptitle('Credit Card Customer Clustering using K-Means\n', fontsize=14, **text_style)
+
         plt.savefig("Plots/clusters.png")  # save the plot as a .png file
         plt.close()  # close the plot
 
