@@ -25,24 +25,21 @@ dataset = data_preprocessor.load_data()
 print("Initial dataset:")
 print(dataset.head())
 
+# Histogram plot
+data_preprocessor.plot_histograms(dataset)
+
 # Check for missing values
 data_preprocessor.check_missing_values(dataset)
 
 # Drop the CUST_ID column
 dataset = data_preprocessor.drop_columns(dataset)
 
-null_values = dataset.isnull().sum()
-null_values = null_values[null_values > 0]
-print("\nNull values in dataset:")
-print(null_values)
-
 
 print("\nDataset after dropping columns:")
+print('.: Dataframe after Dropping Variables :.')
 print(dataset.head())
 
 dataset = data_preprocessor.impute_missing_values(dataset)
-print("\nDataset after imputing missing values:")
-print(dataset.head())
 
 normalised_dataset = data_preprocessor.normalise_data(dataset)
 print("\nNormalised dataset:")

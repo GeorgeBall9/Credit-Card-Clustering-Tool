@@ -18,11 +18,11 @@ class EDA:
         
         yticks, ylabels = plt.yticks()
         xticks, xlabels = plt.xticks()
-        ax.set_xticklabels(xlabels, size=12)
-        ax.set_yticklabels(ylabels, size=12)
+        ax.set_xticklabels(xlabels, size=12, fontfamily='serif')
+        ax.set_yticklabels(ylabels, size=12, fontfamily='serif')
         
-        plt.suptitle('Correlation Map of Numerical Variables', fontweight='bold', x=0.327, y=0.96, ha='center', fontsize=18,)
-        plt.title('Some variables have significant correlations with other variables (> 0.5).\n', fontsize=12, loc='right')
+        plt.suptitle('Correlation Map of Numerical Variables', fontweight='bold', x=0.327, y=0.96, ha='center', fontsize=18, fontfamily='serif')
+        plt.title('Some variables have significant correlations with other variables (> 0.5).\n', fontsize=12, loc='right', fontfamily='serif')
         plt.tight_layout(rect=[0, 0.04, 1, 1.01])
         
         plt.savefig('Plots/heatmap_correlation.png')  # save the plot as a .png file
@@ -41,7 +41,7 @@ class EDA:
         # Main scatter plot comparing the CREDIT_LIMIT vs BALANCE based on TENURE
         ax_main = fig.add_subplot(gs[:, 0])
         sns.scatterplot(data=self.dataset, x='CREDIT_LIMIT', y='BALANCE', hue='TENURE', palette=color_palette, ax=ax_main, edgecolor=None)
-        ax_main.set_title('Credit Limit vs. Balance based on Tenure', fontweight='bold', fontsize=20)
+        ax_main.set_title('Credit Limit vs. Balance based on Tenure', fontweight='bold', fontsize=20, fontfamily='serif')
         
         # Make x and y axis labels bold
         ax_main.xaxis.label.set_fontweight('bold')
@@ -78,7 +78,7 @@ class EDA:
         # Main scatter plot comparing the CREDIT_LIMIT vs BALANCE based on TENURE
         ax_main = fig.add_subplot(gs[:, 0])
         sns.scatterplot(data=self.dataset, x='CREDIT_LIMIT', y='INSTALLMENTS_PURCHASES', hue='TENURE', palette=color_palette, ax=ax_main, edgecolor=None)
-        ax_main.set_title('Credit Limit vs. Installments Purchases based on Tenure', fontweight='bold', fontsize=20)
+        ax_main.set_title('Credit Limit vs. Installments Purchases based on Tenure', fontweight='bold', fontsize=20, fontfamily='serif')
         
         # Make x and y axis labels bold
         ax_main.xaxis.label.set_fontweight('bold')
@@ -119,31 +119,31 @@ class EDA:
         axes[0].plot(purchases_data['min'], purchases_data['TENURE'], 'o', color=color_palette[0], markersize=10, label='Min')
         axes[0].plot(purchases_data['mean'], purchases_data['TENURE'], 'o', color=color_palette[1], markersize=10, label='Mean')
         axes[0].plot(purchases_data['max'], purchases_data['TENURE'], 'o', color=color_palette[2], markersize=10, label='Max')
-        axes[0].set_title('Customer Purchases Amount', fontweight='bold', fontstyle='italic', fontsize=12)
-        axes[0].set_xlabel('PURCHASES', fontweight='bold')
-        axes[0].set_ylabel('TENURE', fontweight='bold')
+        axes[0].set_title('Customer Purchases Amount', fontweight='bold', fontstyle='italic', fontsize=12, fontfamily='serif')
+        axes[0].set_xlabel('PURCHASES', fontweight='bold', fontfamily='serif')
+        axes[0].set_ylabel('TENURE', fontweight='bold', fontfamily='serif')
 
         # Add mean and max labels
         for i in range(len(purchases_data)):
-            axes[0].text(purchases_data.loc[i, 'mean'], purchases_data.loc[i, 'TENURE'] + 0.15, f"{purchases_data.loc[i, 'mean']:.2f}", va='center', ha='center', color=color_palette[1], fontsize=8, fontweight='bold')
-            axes[0].text(purchases_data.loc[i, 'max'], purchases_data.loc[i, 'TENURE'] + 0.15, f"{purchases_data.loc[i, 'max']:.2f}", va='center', ha='center', color=color_palette[2], fontsize=8, fontweight='bold')
+            axes[0].text(purchases_data.loc[i, 'mean'], purchases_data.loc[i, 'TENURE'] + 0.15, f"{purchases_data.loc[i, 'mean']:.2f}", va='center', ha='center', color=color_palette[1], fontsize=8, fontweight='bold', fontfamily='serif')
+            axes[0].text(purchases_data.loc[i, 'max'], purchases_data.loc[i, 'TENURE'] + 0.15, f"{purchases_data.loc[i, 'max']:.2f}", va='center', ha='center', color=color_palette[2], fontsize=8, fontweight='bold', fontfamily='serif')
 
         # Plot PURCHASES_TRX vs TENURE
         axes[1].hlines(purchases_trx_data['TENURE'], purchases_trx_data['min'], purchases_trx_data['max'], color='black')
         axes[1].plot(purchases_trx_data['min'], purchases_trx_data['TENURE'], 'o', color=color_palette[0], markersize=10, label='Min')
         axes[1].plot(purchases_trx_data['mean'], purchases_trx_data['TENURE'], 'o', color=color_palette[1], markersize=10, label='Mean')
         axes[1].plot(purchases_trx_data['max'], purchases_trx_data['TENURE'], 'o', color=color_palette[2], markersize=10, label='Max')
-        axes[1].set_title('Total Purchase Transcations', fontweight='bold', fontstyle='italic', fontsize=12)
-        axes[1].set_xlabel('PURCHASES_TRX', fontweight='bold')
-        axes[1].set_ylabel('TENURE', fontweight='bold')
+        axes[1].set_title('Total Purchase Transcations', fontweight='bold', fontstyle='italic', fontsize=12, fontfamily='serif')
+        axes[1].set_xlabel('PURCHASES_TRX', fontweight='bold', fontfamily='serif')
+        axes[1].set_ylabel('TENURE', fontweight='bold', fontfamily='serif')
 
         # Add mean and max labels
         for i in range(len(purchases_trx_data)):
-            axes[1].text(purchases_trx_data.loc[i, 'mean'], purchases_trx_data.loc[i, 'TENURE'] + 0.2, f"{purchases_trx_data.loc[i, 'mean']:.2f}", va='top', ha='center', color=color_palette[1], fontsize=8, fontweight='bold')
-            axes[1].text(purchases_trx_data.loc[i, 'max'], purchases_trx_data.loc[i, 'TENURE'] + 0.2, f"{purchases_trx_data.loc[i, 'max']:.2f}", va='top', ha='center', color=color_palette[2], fontsize=8, fontweight='bold')
+            axes[1].text(purchases_trx_data.loc[i, 'mean'], purchases_trx_data.loc[i, 'TENURE'] + 0.2, f"{purchases_trx_data.loc[i, 'mean']:.2f}", va='top', ha='center', color=color_palette[1], fontsize=8, fontweight='bold', fontfamily='serif')
+            axes[1].text(purchases_trx_data.loc[i, 'max'], purchases_trx_data.loc[i, 'TENURE'] + 0.2, f"{purchases_trx_data.loc[i, 'max']:.2f}", va='top', ha='center', color=color_palette[2], fontsize=8, fontweight='bold', fontfamily='serif')
 
         # Set the overall title and legend
-        plt.suptitle('Purchases Amount and Total Purchase Transaction vs. Tenure Comparison', fontsize=14, fontweight='bold')
+        plt.suptitle('Purchases Amount and Total Purchase Transaction vs. Tenure Comparison', fontsize=14, fontweight='bold', fontfamily='serif')
         axes[0].legend()
         axes[1].legend()
         
