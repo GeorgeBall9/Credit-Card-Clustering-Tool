@@ -26,10 +26,3 @@ class DataPreprocessor:
         normalised_data = scaler.fit_transform(dataset)
         normalised_dataset = pd.DataFrame(normalised_data, columns = dataset.columns)
         return normalised_dataset
-
-    def plot_correlation_heatmap(self, dataset: pd.DataFrame) -> pd.DataFrame:
-        corr = dataset.corr()
-        plt.figure(figsize=(10, 8))
-        sns.heatmap(corr, annot=True, fmt=".2f")
-        plt.savefig('Plots/correlation.png')  # save the plot as a .png file
-        plt.close()  # close the plot

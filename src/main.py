@@ -5,6 +5,10 @@ from autoencoder_trainer import AutoencoderTrainer
 from kmeans_clustering import KMeansClustering
 from rfm_analysis import RFMAnalysis
 
+import time
+
+start_time = time.time()
+
 # Check if the Plots directory exists, if not, create it
 if not os.path.exists('Plots'):
     os.makedirs('Plots')
@@ -30,6 +34,7 @@ eda.check_missing_values()
 eda.plot_correlation_heatmap()
 eda.plot_pairplot()
 eda.plot_credit_limit_vs_balance()
+eda.plot_credit_limit_vs_installment()
 eda.plot_purchases_vs_tenure()
 
 null_values = dataset.isnull().sum()
@@ -48,9 +53,6 @@ print(dataset.head())
 normalised_dataset = data_preprocessor.normalise_data(dataset)
 print("\nNormalised dataset:")
 print(normalised_dataset.head())
-
-# Plot correlation heatmap
-data_preprocessor.plot_correlation_heatmap(dataset)
 
 # Step : Perform RFM Analysis
 rfm_analysis = RFMAnalysis(dataset)
@@ -87,4 +89,11 @@ kmeans_clustering.fit_model()
 kmeans_clustering.silhouette_score()
 kmeans_clustering.davies_bouldin_index() 
 kmeans_clustering.visualise_clusters()
+
+
+end_time = time.time()  # Save the current time at the end of your script
+
+runtime = end_time - start_time  # Calculate the runtime
+
+print(f"The runtime of the script is {runtime} seconds.")
 

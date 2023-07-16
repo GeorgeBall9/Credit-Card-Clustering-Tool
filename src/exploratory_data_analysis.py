@@ -18,12 +18,19 @@ class EDA:
         corr = self.dataset.corr()
         mask = np.triu(np.ones_like(corr, dtype=bool))  # Create a mask for the upper triangle
 
-        fig = plt.subplots(figsize=(18, 12))
-        sns.heatmap(corr, mask=mask, annot=True, fmt=".2f", cmap='mako', linewidths=0.1, cbar=False, annot_kws={"size":8})
+        fig, ax = plt.subplots(figsize=(24, 18))
+        sns.heatmap(corr, mask=mask, annot=True, fmt=".2f", cmap='mako', linewidths=0.1, cbar=False, annot_kws={"size":14})
         
-        plt.suptitle('Correlation Map of Numerical Variables', fontweight='bold', x=0.327, y=0.96, ha='left', fontsize=13)
-            
-        plt.savefig('Plots/correlation.png')  # save the plot as a .png file
+        yticks, ylabels = plt.yticks()
+        xticks, xlabels = plt.xticks()
+        ax.set_xticklabels(xlabels, size=12)
+        ax.set_yticklabels(ylabels, size=12)
+        
+        plt.suptitle('Correlation Map of Numerical Variables', fontweight='bold', x=0.327, y=0.96, ha='center', fontsize=18,)
+        plt.title('Some variables have significant correlations with other variables (> 0.5).\n', fontsize=12, loc='right')
+        plt.tight_layout(rect=[0, 0.04, 1, 1.01])
+        
+        plt.savefig('Plots/heatmap_correlation.png')  # save the plot as a .png file
         plt.close()  # close the plot
 
     def plot_pairplot(self):
@@ -67,6 +74,43 @@ class EDA:
 
         # Save the plot as a .png file
         plt.savefig('Plots/credit_limit_vs_balance.png')
+        plt.close()  # close the plot
+        
+    def plot_credit_limit_vs_installment(self):
+        # Create a figure and a grid of subplots
+        fig = plt.figure(figsize=(22, 14))
+        unique_tenures = sorted(self.dataset['TENURE'].unique())
+        gs = GridSpec(len(unique_tenures) + 1, 2, width_ratios=[3, 1], figure=fig)
+
+        # Define a color palette
+        color_palette = sns.color_palette("mako", len(unique_tenures))
+
+        # Main scatter plot comparing the CREDIT_LIMIT vs BALANCE based on TENURE
+        ax_main = fig.add_subplot(gs[:, 0])
+        sns.scatterplot(data=self.dataset, x='CREDIT_LIMIT', y='INSTALLMENTS_PURCHASES', hue='TENURE', palette=color_palette, ax=ax_main, edgecolor=None)
+        ax_main.set_title('Credit Limit vs. Installments Purchases based on Tenure', fontweight='bold', fontsize=20)
+        
+        # Make x and y axis labels bold
+        ax_main.xaxis.label.set_fontweight('bold')
+        ax_main.yaxis.label.set_fontweight('bold')
+
+        # Subplots for each unique value of TENURE
+        for i, tenure in enumerate(unique_tenures):
+            ax_sub = fig.add_subplot(gs[i, 1])
+            subset = self.dataset[self.dataset['TENURE'] == tenure]
+            other = self.dataset[self.dataset['TENURE'] != tenure]
+            sns.scatterplot(data=other, x='CREDIT_LIMIT', y='INSTALLMENTS_PURCHASES', ax=ax_sub, color='lightgrey', alpha=0.2, edgecolor=None)
+            sns.scatterplot(data=subset, x='CREDIT_LIMIT', y='INSTALLMENTS_PURCHASES', ax=ax_sub, label=f'TENURE: {tenure}', color=color_palette[i], edgecolor="black")
+            ax_sub.set_xlabel('')
+            ax_sub.set_ylabel('')
+            ax_sub.set_xticks([])
+            ax_sub.set_yticks([])
+
+        # Adjust the spacing between the subplots
+        plt.subplots_adjust(hspace=0.5)
+
+        # Save the plot as a .png file
+        plt.savefig('Plots/credit_limit_vs_installments_purchases.png')
         plt.close()  # close the plot
 
     def plot_purchases_vs_tenure(self):
