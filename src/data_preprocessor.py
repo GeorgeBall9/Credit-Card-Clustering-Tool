@@ -1,21 +1,42 @@
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
-from scipy import stats
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+from sklearn.preprocessing import StandardScaler
+from scipy import stats
+
+
 class DataPreprocessor:
     def __init__(self, filepath):
+        """DataPreprocessor class to load, preprocess, and analyse data.
+
+        Args:
+            filepath (str): The file path to the dataset.
+        """
         self.filepath = filepath 
         
     def load_data(self) -> pd.DataFrame:
-        #Load the dataset from the CSV file
+        """
+        Load the dataset from the CSV file.
+
+        Returns:
+            pd.DataFrame: The loaded dataset.
+
+        """
+        
         dataset = pd.read_csv(self.filepath)    
         return dataset
     
-    # Histogram plot of data variables for intial look at dataset
+    
     def plot_histograms(self, dataset: pd.DataFrame):
-        # Set the font
+        """
+        Plot histograms for each variable in the dataset.
+
+        Args:
+            dataset (pd.DataFrame): The dataset to plot histograms for.
+
+        """
+        
         font = {'family' : 'serif'}
         plt.rc('font', **font)
         
@@ -33,6 +54,13 @@ class DataPreprocessor:
         plt.close()
     
     def check_missing_values(self, dataset: pd.DataFrame):
+        """
+        Check for missing values in the dataset and plot a heatmap.
+
+        Args:
+            dataset (pd.DataFrame): The dataset to check for missing values.
+
+        """
         # Check for missing values in the dataset
         missing_values = dataset.isnull().sum()
         print("Missing values in each column:\n", missing_values)
@@ -46,6 +74,15 @@ class DataPreprocessor:
         
         
     def plot_missing_values_heatmap(self, dataset: pd.DataFrame, columns: list, missing_counts: dict):
+        """
+        Plot a heatmap of missing values in the dataset.
+
+        Args:
+            dataset (pd.DataFrame): The dataset to plot the heatmap for.
+            columns (list): The list of columns with missing values.
+            missing_counts (dict): The dictionary of columns with their corresponding missing value counts.
+
+        """
         # Select the columns with missing values
         missing_columns = dataset[columns]
         
@@ -67,10 +104,30 @@ class DataPreprocessor:
         plt.close()
     
     def drop_columns(self, dataset: pd.DataFrame) -> pd.DataFrame:
+        """
+        Drop the 'CUST_ID' column from the dataset.
+
+        Args:
+            dataset (pd.DataFrame): The dataset to drop the column from.
+
+        Returns:
+            pd.DataFrame: The dataset with the column dropped.
+
+        """
         dataset = dataset.drop(columns=['CUST_ID'])
         return dataset
     
     def impute_missing_values(self, dataset: pd.DataFrame) -> pd.DataFrame:
+        """
+        Impute missing values in the dataset with the column mean.
+
+        Args:
+            dataset (pd.DataFrame): The dataset to impute missing values.
+
+        Returns:
+            pd.DataFrame: The dataset with missing values imputed.
+
+        """
         dataset.fillna(dataset.mean(), inplace=True)
         
         # Check for missing values again
@@ -81,6 +138,16 @@ class DataPreprocessor:
         return dataset
     
     def normalise_data(self, dataset: pd.DataFrame) -> pd.DataFrame:
+        """
+        Perform standardisation on the dataset.
+
+        Args:
+            dataset (pd.DataFrame): The dataset to normalise.
+
+        Returns:
+            pd.DataFrame: The normalised dataset.
+
+        """
         scaler = StandardScaler()
         normalised_data = scaler.fit_transform(dataset)
         normalised_dataset = pd.DataFrame(normalised_data, columns = dataset.columns)
