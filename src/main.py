@@ -7,10 +7,11 @@ from rfm_analysis import RFMAnalysis
 
 import time
 
+# Record the start time
 start_time = time.time()
 
 # List of plot directories to be created
-directories = ['Plots/EDA', 'Plots/PreProcessing', 'Plots/RFM', 'Plots/Clustering']
+directories = ['Dataset', 'TrainedAutoencoder','Plots/EDA', 'Plots/PreProcessing', 'Plots/RFM', 'Plots/Clustering']
 
 # Loop over the directories
 for directory in directories:
@@ -18,11 +19,9 @@ for directory in directories:
     if not os.path.exists(directory):
         os.makedirs(directory)
     
-# Check if the TrainedAutoencoder directory exists, if not, create it
-if not os.path.exists('TrainedAutoencoder'):
-    os.makedirs('TrainedAutoencoder')
 
-# Step 1: Preprocess the data
+
+
 # Create an instance of DataPreprocessor
 data_preprocessor = DataPreprocessor(filepath='Dataset/data.csv')
 
