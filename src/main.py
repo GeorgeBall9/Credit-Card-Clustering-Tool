@@ -9,9 +9,14 @@ import time
 
 start_time = time.time()
 
-# Check if the Plots directory exists, if not, create it
-if not os.path.exists('Plots'):
-    os.makedirs('Plots')
+# List of plot directories to be created
+directories = ['Plots/EDA', 'Plots/PreProcessing', 'Plots/RFM', 'Plots/Clustering']
+
+# Loop over the directories
+for directory in directories:
+    # Check if the directory exists, if not, create it
+    if not os.path.exists(directory):
+        os.makedirs(directory)
     
 # Check if the TrainedAutoencoder directory exists, if not, create it
 if not os.path.exists('TrainedAutoencoder'):

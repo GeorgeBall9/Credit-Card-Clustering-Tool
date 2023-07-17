@@ -29,7 +29,7 @@ class DataPreprocessor:
         plt.suptitle("Histogram representation of each variable", fontsize=22, fontweight='bold', fontfamily='serif')
         
         # Save the figure
-        plt.savefig('Plots/histograms.png')
+        plt.savefig('Plots/PreProcessing/histograms.png')
         plt.close()
     
     def check_missing_values(self, dataset: pd.DataFrame):
@@ -63,7 +63,7 @@ class DataPreprocessor:
         plt.suptitle('Heatmap of Missing Values within the Data', fontweight='bold', x=0.327, y=0.96, ha='center', fontsize=22, fontfamily='serif')
         plt.title(f'Missing values: {subtitle}', fontsize=16, fontstyle='italic', fontfamily='serif')
         
-        plt.savefig('Plots/missing_values_heatmap.png')
+        plt.savefig('Plots/PreProcessing/missing_values_heatmap.png')
         plt.close()
     
     def drop_columns(self, dataset: pd.DataFrame) -> pd.DataFrame:

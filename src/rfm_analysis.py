@@ -73,6 +73,6 @@ class RFMAnalysis:
         
         plt.legend(patches, segment_counts.index, loc="center left", bbox_to_anchor=(1.2, 0.5))
         plt.title('Customer Segments from RFM Analysis', fontsize=18, fontweight='bold', fontfamily='serif')
-        plt.savefig("Plots/rfm_segments.png")  # save the plot as a .png file
+        plt.savefig("Plots/RFM/rfm_segments.png")  # save the plot as a .png file
         plt.close()  # close the plot
 

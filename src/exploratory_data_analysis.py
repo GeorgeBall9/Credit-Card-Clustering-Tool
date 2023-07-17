@@ -25,7 +25,7 @@ class EDA:
         plt.title('Some variables have significant correlations with other variables (> 0.5).\n', fontsize=12, loc='right', fontfamily='serif')
         plt.tight_layout(rect=[0, 0.04, 1, 1.01])
         
-        plt.savefig('Plots/heatmap_correlation.png')  # save the plot as a .png file
+        plt.savefig('Plots/EDA/heatmap_correlation.png')  # save the plot as a .png file
         plt.close()  # close the plot
 
 
@@ -63,7 +63,7 @@ class EDA:
         plt.subplots_adjust(hspace=0.5)
 
         # Save the plot as a .png file
-        plt.savefig('Plots/credit_limit_vs_balance.png')
+        plt.savefig('Plots/EDA/credit_limit_vs_balance.png')
         plt.close()  # close the plot
         
     def plot_credit_limit_vs_installment(self):
@@ -100,7 +100,7 @@ class EDA:
         plt.subplots_adjust(hspace=0.5)
 
         # Save the plot as a .png file
-        plt.savefig('Plots/credit_limit_vs_installments_purchases.png')
+        plt.savefig('Plots/EDA/credit_limit_vs_installments_purchases.png')
         plt.close()  # close the plot
 
     def plot_purchases_vs_tenure(self):
@@ -154,7 +154,7 @@ class EDA:
             ax.xaxis.grid(True, linestyle='--', alpha=0.5)
 
         # Save the plot as a .png file
-        plt.savefig('Plots/purchases_vs_tenure.png')
+        plt.savefig('Plots/EDA/purchases_vs_tenure.png')
         plt.close()  # close the plot
 
 

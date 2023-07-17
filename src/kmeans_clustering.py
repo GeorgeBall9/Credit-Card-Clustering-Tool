@@ -31,7 +31,7 @@ class KMeansClustering:
         plt.xticks(fontsize=12)
         plt.yticks(fontsize=12)
         plt.grid(True)
-        plt.savefig("Plots/sse_plot.png")  # save the plot as a .png file
+        plt.savefig("Plots/Clustering/sse_plot.png")  # save the plot as a .png file
         plt.close()  # close the plot
     
     def silhouette_analysis(self, max_clusters: int = 10):
@@ -51,7 +51,7 @@ class KMeansClustering:
         plt.xticks(fontsize=12)
         plt.yticks(fontsize=12)
         plt.grid(True)
-        plt.savefig("Plots/silhouette_score_plot.png")  # save the plot as a .png file
+        plt.savefig("Plots/Clustering/silhouette_score_plot.png")  # save the plot as a .png file
         plt.close()  # close the plot
 
 
@@ -140,7 +140,7 @@ class KMeansClustering:
         
         plt.suptitle('Credit Card Customer Clustering using K-Means\n', fontsize=14, **text_style)
 
-        plt.savefig("Plots/clusters.png")  # save the plot as a .png file
+        plt.savefig("Plots/Clustering/clusters.png")  # save the plot as a .png file
         plt.close()  # close the plot
         
     def cluster_summary(self):
