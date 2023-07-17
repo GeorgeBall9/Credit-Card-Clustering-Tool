@@ -2,14 +2,29 @@ import pandas as pd
 import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
+
 from matplotlib.gridspec import GridSpec
 
 class EDA:
     def __init__(self, dataset: pd.DataFrame):
+        """
+        Exploratory Data Analysis (EDA) class to perform data exploration and visualization.
+
+        Args:
+            dataset (pd.DataFrame): The dataset to be analyzed.
+
+        Attributes:
+            dataset (pd.DataFrame): The dataset to be analyzed.
+
+        """
         self.dataset = dataset
 
     def plot_correlation_heatmap(self):
-        # Plot a correlation heatmap
+        """
+        Plot a correlation heatmap for numerical variables in the dataset.
+
+        """
+        
         corr = self.dataset.corr()
         mask = np.triu(np.ones_like(corr, dtype=bool))  # Create a mask for the upper triangle
 
@@ -30,6 +45,10 @@ class EDA:
 
 
     def plot_credit_limit_vs_balance(self):
+        """
+        Plot a scatter plot comparing Credit Limit vs. Balance based on Tenure.
+
+        """
         # Create a figure and a grid of subplots
         fig = plt.figure(figsize=(22, 14))
         unique_tenures = sorted(self.dataset['TENURE'].unique())
@@ -67,6 +86,10 @@ class EDA:
         plt.close()  # close the plot
         
     def plot_credit_limit_vs_installment(self):
+        """
+        Plot a scatter plot comparing Credit Limit vs. Installment Purchases based on Tenure.
+
+        """
         # Create a figure and a grid of subplots
         fig = plt.figure(figsize=(22, 14))
         unique_tenures = sorted(self.dataset['TENURE'].unique())
@@ -104,6 +127,10 @@ class EDA:
         plt.close()  # close the plot
 
     def plot_purchases_vs_tenure(self):
+        """
+        Plot the relationship between Purchases Amount and Total Purchase Transaction based on Tenure.
+
+        """
         # Prepare the data
         purchases_data = self.dataset.groupby('TENURE')['PURCHASES'].agg(['min', 'mean', 'max']).reset_index()
         purchases_trx_data = self.dataset.groupby('TENURE')['PURCHASES_TRX'].agg(['min', 'mean', 'max']).reset_index()
