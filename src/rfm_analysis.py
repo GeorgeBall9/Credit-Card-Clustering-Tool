@@ -2,7 +2,6 @@ import pandas as pd
 import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.colors as mcolor
 
 from sklearn.preprocessing import StandardScaler
 
@@ -61,12 +60,18 @@ class RFMAnalysis:
     
     def plot_customer_segments(self, rfm):
         segment_counts = rfm['Customer Segment'].value_counts()
-        cmap = plt.get_cmap('mako')  # get the 'mako' colormap
-        colors = [cmap(i) for i in np.linspace(0, 1, len(segment_counts))]  # generate colors from the colormap
-
+        # colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd'] # specify colour scheme
+        # Create a color palette with the same number of colors as segments
+        colors = sns.color_palette('mako', n_colors=segment_counts.shape[0] + 1) # Add extra colour to then skip first later (Too dark)
+       
         plt.figure(figsize=(14, 8))
-        patches, texts, autotexts = plt.pie(segment_counts, labels=segment_counts.index, autopct='%1.1f%%', colors=colors)
-        plt.legend(patches, segment_counts.index, loc="right")
+        patches, texts, autotexts = plt.pie(segment_counts, labels=segment_counts.index, autopct='%1.1f%%', colors=colors[1:])
+        
+        for autotext in autotexts:
+            autotext.set_fontsize(14)
+            autotext.set_fontfamily('serif')
+        
+        plt.legend(patches, segment_counts.index, loc="center left", bbox_to_anchor=(1.2, 0.5))
         plt.title('Customer Segments from RFM Analysis', fontsize=18, fontweight='bold', fontfamily='serif')
         plt.savefig("Plots/rfm_segments.png")  # save the plot as a .png file
         plt.close()  # close the plot
