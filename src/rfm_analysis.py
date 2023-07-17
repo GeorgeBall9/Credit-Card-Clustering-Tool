@@ -3,29 +3,67 @@ import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
 
-from sklearn.preprocessing import StandardScaler
+
 
 class RFMAnalysis:
     def __init__(self, dataset: pd.DataFrame):
+        """
+        RFM Analysis class to perform RFM analysis on a given dataset.
+
+        Args:
+            dataset (pd.DataFrame): The dataset to be used for RFM analysis.
+
+        Attributes:
+            dataset (pd.DataFrame): The dataset to be used for RFM analysis.
+
+        """
         self.dataset = dataset
 
     def calculate_recency(self):
+        """
+        Calculate the recency values for RFM analysis.
+
+        Returns:
+            pd.DataFrame: The recency values.
+
+        """
         recency = pd.DataFrame(index=self.dataset.index)
         recency['Recency'] = 10  # arbitrary recency value
         return recency
 
     def calculate_frequency(self):
+        """
+        Calculate the frequency values for RFM analysis.
+
+        Returns:
+            pd.DataFrame: The frequency values.
+
+        """
         frequency_columns = ['BALANCE_FREQUENCY', 'PURCHASES_FREQUENCY', 'ONEOFF_PURCHASES_FREQUENCY', 'PURCHASES_INSTALLMENTS_FREQUENCY', 'CASH_ADVANCE_FREQUENCY']
         frequency = self.dataset[frequency_columns].sum(axis=1).to_frame('Frequency')
         return frequency
 
     def calculate_monetary(self):
+        """
+        Calculate the monetary values for RFM analysis.
+
+        Returns:
+            pd.DataFrame: The monetary values.
+
+        """
         monetary_columns = ['PURCHASES', 'PAYMENTS']
         monetary = self.dataset[monetary_columns].sum(axis=1).to_frame('Monetary')
         return monetary
 
     def calculate_rfm_values(self):
-        # Calculate Recency, Frequency and Monetary values
+        """
+        Calculate the RFM values based on the recency, frequency, and monetary values.
+
+        Returns:
+            pd.DataFrame: The RFM values.
+
+        """
+        # Call Recency, Frequency and Monetary values
         recency = self.calculate_recency()
         frequency = self.calculate_frequency()
         monetary = self.calculate_monetary()
@@ -59,6 +97,13 @@ class RFMAnalysis:
     
     
     def plot_customer_segments(self, rfm):
+        """
+        Plot the customer segments based on the RFM analysis.
+
+        Args:
+            rfm (pd.DataFrame): The RFM values.
+
+        """
         segment_counts = rfm['Customer Segment'].value_counts()
         # colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd'] # specify colour scheme
         # Create a color palette with the same number of colors as segments

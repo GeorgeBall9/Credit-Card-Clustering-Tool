@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score, davies_bouldin_score, calinski_harabasz_score
 from yellowbrick.cluster import SilhouetteVisualizer
@@ -11,11 +12,32 @@ from matplotlib.lines import Line2D
 
 class KMeansClustering:
     def __init__(self, dataset: pd.DataFrame, n_clusters: int = 5, random_state: int = 32):
+        """
+        K-Means Clustering class to perform clustering analysis using K-Means algorithm.
+
+        Args:
+            dataset (pd.DataFrame): The dataset to be used for clustering.
+            n_clusters (int): The number of clusters to create. Selected is 5.
+            random_state (int): The random seed for reproducibility. Default is 32.
+
+        Attributes:
+            dataset (pd.DataFrame): The dataset to be used for clustering.
+            n_clusters (int): The number of clusters to create.
+            model (KMeans): The KMeans model for clustering analysis.
+
+        """
         self.dataset = dataset
         self.n_clusters = n_clusters
         self.model = KMeans(n_clusters=self.n_clusters, n_init=10, random_state=random_state)
 
     def inertia_plot(self, max_clusters: int = 10):
+        """
+        Plot the Inertia (SSE) for different numbers of clusters to determine the optimal number of clusters.
+
+        Args:
+            max_clusters (int): The maximum number of clusters to consider. Default is 10.
+
+        """
         inertia = []
         for i in range(1, max_clusters + 1):
             kmeans = KMeans(n_clusters=i, n_init=10)
@@ -35,6 +57,13 @@ class KMeansClustering:
         plt.close()  # close the plot
     
     def silhouette_analysis(self, max_clusters: int = 10):
+        """
+        Perform silhouette analysis to evaluate the quality of clustering for different numbers of clusters.
+
+        Args:
+            max_clusters (int): The maximum number of clusters to consider. Default is 10.
+
+        """
         silhouette_scores = []
         for i in range(2, max_clusters + 1):  # start from 2 because silhouette score is not defined for 1 cluster
             kmeans = KMeans(n_clusters=i, n_init=10)
@@ -56,30 +85,63 @@ class KMeansClustering:
 
 
     def fit_model(self):
+        """
+        Fit the K-Means model to the dataset.
+
+        """
         self.model.fit(self.dataset)
         self.dataset_df = pd.DataFrame(self.dataset)
         self.dataset_df["Cluster"] = self.model.labels_
 
     def silhouette_score(self):
+        """
+        Calculate the silhouette score for the clustered data.
+
+        Returns:
+            float: The silhouette score.
+
+        """
         score = silhouette_score(self.dataset, self.model.labels_)
         print(f"Silhouette Score: {score}")
         
     def calinski_harabasz_index(self):
+        """
+        Calculate the Calinski-Harabasz index for the clustered data.
+
+        Returns:
+            float: The Calinski-Harabasz index.
+
+        """
         chi = calinski_harabasz_score(self.dataset, self.model.labels_)
         print(f"Calinski-Harabasz Index: {chi}")
         return chi
 
     def davies_bouldin_index(self):
+        """
+        Calculate the Davies-Bouldin index for the clustered data.
+
+        Returns:
+            float: The Davies-Bouldin index.
+
+        """
         dbi = davies_bouldin_score(self.dataset, self.model.labels_)
         print(f"Davies-Bouldin Index: {dbi}")
         return dbi
     
     def cluster_properties(self):
+        """
+        Calculate the mean values for each cluster and display the cluster properties.
+
+        """
         cluster_props = self.dataset_df.groupby('Cluster').mean()
         print(cluster_props)
     
         
     def visualise_clusters(self):
+        """
+        Visualize the clustered data using various plots and charts.
+
+        """
         cluster_colors=sns.color_palette('mako', n_colors=self.n_clusters)  # use the 'mako' color scheme
         labels = ['Cluster 1', 'Cluster 2', 'Cluster 3', 'Cluster 4', 'Cluster 5', 'Centroids']
         title=dict(fontsize=12, fontweight='bold', style='italic', fontfamily='serif')
@@ -144,6 +206,13 @@ class KMeansClustering:
         plt.close()  # close the plot
         
     def cluster_summary(self):
+        """
+        Generate a summary of the clusters including overall and per-cluster statistics.
+
+        Returns:
+            pd.DataFrame: The cluster summary.
+
+        """
         # Add the cluster labels to the dataset
         self.dataset_df["Cluster"] = self.model.labels_
         self.dataset_df["Cluster"] = 'Cluster ' + (self.dataset_df["Cluster"] + 1).astype(str)
