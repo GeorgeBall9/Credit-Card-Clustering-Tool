@@ -93,6 +93,14 @@ class KMeansClustering:
         # Silhouette plot
         s_viz = SilhouetteVisualizer(self.model, colors='mako', ax=ax1)
         s_viz.fit(self.dataset)
+        ax1.set_xlabel("Silhouette Coefficient Values", fontfamily='serif', fontsize=8)
+        ax1.set_ylabel("Data Points Grouped by Clusters", fontfamily='serif',fontsize=8)
+        # Create a legend for the silhouette plot
+        legend1 = Line2D([0], [0], color='red', lw=2, linestyle='--', label='Average Silhouette Score')
+        legend_elements = [Line2D([0], [0], marker='o', color='w', label=label,
+                              markerfacecolor=color, markersize=10) for label, color in zip(labels, cluster_colors)]
+        ax1.legend(handles=[legend1] + legend_elements, **legend_style)
+        
 
         # Scatter plot of the cluster distributions
         ax2.scatter(
@@ -112,7 +120,7 @@ class KMeansClustering:
         # Create a legend for the scatter plot
         legend_elements = [Line2D([0], [0], marker='o', color='w', label=label,
                                   markerfacecolor=color, markersize=10) for label, color in zip(labels, cluster_colors)]
-        legend2 = ax2.legend(handles=legend_elements, loc="best")
+        legend2 = ax2.legend(handles=legend_elements, loc="best", **legend_style)
         ax2.add_artist(legend2)
 
         # Waffle chart
@@ -125,8 +133,8 @@ class KMeansClustering:
         Waffle.make_waffle(ax=ax3, rows=6, values=wfl_square, colors=cluster_colors, 
                         labels=[f"Cluster {i+1} - ({k}%)" for i, k in wfl_label.items()], 
                         legend={'loc': 'upper center', 'bbox_to_anchor': (0.5, -0.05), 'ncol': 5, 'borderpad': 2, 
-                                'frameon': False, 'fontsize':10})
-        ax3.text(0.01, -0.09, '** 1 square ≈ 100 customers', weight = 'bold', style='italic', fontsize=8)
+                                'frameon': False, 'fontsize':10, })
+        ax3.text(0.01, -0.09, '** 1 square ≈ 100 customers', weight = 'bold', style='italic', fontsize=8, fontfamily='serif')
         
         ax4.axis('off')  # turn off the fourth subplot
         
@@ -134,5 +142,25 @@ class KMeansClustering:
 
         plt.savefig("Plots/clusters.png")  # save the plot as a .png file
         plt.close()  # close the plot
+        
+    def cluster_summary(self):
+        # Add the cluster labels to the dataset
+        self.dataset_df["Cluster"] = self.model.labels_
+        self.dataset_df["Cluster"] = 'Cluster ' + (self.dataset_df["Cluster"] + 1).astype(str)
+
+        # Calculate overall mean
+        df_profile_overall = pd.DataFrame()
+        df_profile_overall['Overall'] = self.dataset_df.describe().loc[['mean']].T
+
+        # Group by cluster labels and calculate mean
+        df_cluster_summary = self.dataset_df.groupby("Cluster").describe().T.reset_index().rename(columns={'level_0': 'Column Name', 'level_1': 'Metrics'})
+        df_cluster_summary = df_cluster_summary[df_cluster_summary['Metrics'] == 'mean'].set_index('Column Name')
+
+        # Join both dataframes
+        df_profile = df_cluster_summary.join(df_profile_overall).reset_index()
+
+        return df_profile
+
+   
 
 

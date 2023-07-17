@@ -57,6 +57,7 @@ eda.plot_purchases_vs_tenure()
 # Step : Perform RFM Analysis
 rfm_analysis = RFMAnalysis(dataset)
 rfm_values = rfm_analysis.calculate_rfm_values()
+rfm_analysis.plot_customer_segments(rfm_values)
 print("\n RFM analysis...")
 print(rfm_values)  # print RFM values
 
@@ -93,6 +94,9 @@ kmeans_clustering.calinski_harabasz_index()
 kmeans_clustering.davies_bouldin_index() 
 kmeans_clustering.cluster_properties()
 kmeans_clustering.visualise_clusters()
+print(kmeans_clustering.cluster_summary().to_string())
+
+
 
 
 end_time = time.time()  # Save the current time at the end of your script
