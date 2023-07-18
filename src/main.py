@@ -47,8 +47,7 @@ def load_and_preprocess_data():
     dataset = data_preprocessor.drop_columns(dataset)
 
 
-    print("\nDataset after dropping columns:")
-    print('.: Dataframe after Dropping Variables :.')
+    print("\nDataFrame after dropping columns:")
     print(dataset.head())
 
     dataset = data_preprocessor.impute_missing_values(dataset)
