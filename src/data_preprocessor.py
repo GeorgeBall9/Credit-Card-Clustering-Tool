@@ -44,10 +44,15 @@ class DataPreprocessor:
         fig = plt.figure(figsize=(26,24))
         
         # Create histograms for each column in the dataset
-        dataset.hist(bins=50, figsize=(26,24), color='aquamarine')
-        
+        ax = dataset.hist(bins=50, figsize=(26, 24), color='aquamarine')
+
+        # Increase font size of axis labels
+        for axis in ax.flatten():
+            axis.tick_params(axis='both', which='major', labelsize=16)
+            axis.set_title(axis.get_title(), fontdict={'fontsize': 14, 'fontfamily': 'serif'})
+
         # Set the main title 
-        plt.suptitle("Histogram representation of each variable", fontsize=22, fontweight='bold', fontfamily='serif')
+        plt.suptitle("Histogram representation of each variable", fontsize=28, fontweight='bold', fontfamily='serif')
         
         # Save the figure
         plt.savefig('Plots/PreProcessing/histograms.png')
