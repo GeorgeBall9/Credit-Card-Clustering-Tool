@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import seaborn as sns
 import numpy as np
@@ -17,6 +18,9 @@ class EDA:
             dataset (pd.DataFrame): The dataset to be analyzed.
 
         """
+        if not isinstance(dataset, pd.DataFrame):
+            raise ValueError("The provided dataset must be a pandas DataFrame.")
+        
         self.dataset = dataset
 
     def plot_correlation_heatmap(self):
