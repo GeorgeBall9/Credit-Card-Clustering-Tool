@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -13,6 +14,9 @@ class DataPreprocessor:
         Args:
             filepath (str): The file path to the dataset.
         """
+        if not os.path.isfile(filepath):
+            raise ValueError(f"The provided file path {filepath} does not exist.")
+        
         self.filepath = filepath 
         
     def load_data(self) -> pd.DataFrame:
@@ -23,8 +27,11 @@ class DataPreprocessor:
             pd.DataFrame: The loaded dataset.
 
         """
-        
-        dataset = pd.read_csv(self.filepath)    
+        try:
+            dataset = pd.read_csv(self.filepath)
+        except Exception as e:
+            raise ValueError(f"Failed to load data from {self.filepath}. Error: {str(e)}")  
+          
         return dataset
     
     
@@ -36,6 +43,8 @@ class DataPreprocessor:
             dataset (pd.DataFrame): The dataset to plot histograms for.
 
         """
+        if not isinstance(dataset, pd.DataFrame):
+            raise ValueError("Input dataset should be of type pd.DataFrame.")
         
         font = {'family' : 'serif'}
         plt.rc('font', **font)
@@ -66,6 +75,9 @@ class DataPreprocessor:
             dataset (pd.DataFrame): The dataset to check for missing values.
 
         """
+        if not isinstance(dataset, pd.DataFrame):
+            raise ValueError("Input dataset should be of type pd.DataFrame.")
+        
         # Check for missing values in the dataset
         missing_values = dataset.isnull().sum()
         print("Missing values in each column:\n", missing_values)
@@ -88,6 +100,9 @@ class DataPreprocessor:
             missing_counts (dict): The dictionary of columns with their corresponding missing value counts.
 
         """
+        if not isinstance(dataset, pd.DataFrame) or not isinstance(columns, list) or not isinstance(missing_counts, dict):
+            raise ValueError("Invalid input types. Expecting pd.DataFrame, list and dict for dataset, columns and missing_counts respectively.")
+        
         # Select the columns with missing values
         missing_columns = dataset[columns]
         
@@ -119,6 +134,12 @@ class DataPreprocessor:
             pd.DataFrame: The dataset with the column dropped.
 
         """
+        if not isinstance(dataset, pd.DataFrame):
+            raise ValueError("Input dataset should be of type pd.DataFrame.")
+        
+        if 'CUST_ID' not in dataset.columns:
+            raise ValueError("The column 'CUST_ID' does not exist in the dataset.")
+        
         dataset = dataset.drop(columns=['CUST_ID'])
         return dataset
     
@@ -133,6 +154,9 @@ class DataPreprocessor:
             pd.DataFrame: The dataset with missing values imputed.
 
         """
+        if not isinstance(dataset, pd.DataFrame):
+            raise ValueError("Input dataset should be of type pd.DataFrame.")
+        
         dataset.fillna(dataset.mean(), inplace=True)
         
         # Check for missing values again
@@ -153,7 +177,14 @@ class DataPreprocessor:
             pd.DataFrame: The normalised dataset.
 
         """
-        scaler = StandardScaler()
-        normalised_data = scaler.fit_transform(dataset)
+        if not isinstance(dataset, pd.DataFrame):
+            raise ValueError("Input dataset should be of type pd.DataFrame.")
+        
+        try:
+            scaler = StandardScaler()
+            normalised_data = scaler.fit_transform(dataset)
+        except Exception as e:
+            raise ValueError(f"Failed to normalise data. Error: {str(e)}")
+        
         normalised_dataset = pd.DataFrame(normalised_data, columns = dataset.columns)
         return normalised_dataset
