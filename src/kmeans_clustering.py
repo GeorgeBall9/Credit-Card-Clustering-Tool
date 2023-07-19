@@ -11,7 +11,7 @@ from matplotlib.lines import Line2D
 
 
 class KMeansClustering:
-    def __init__(self, dataset: pd.DataFrame, n_clusters: int = 5, random_state: int = 32):
+    def __init__(self, dataset: pd.DataFrame, n_clusters: int = 5, random_state: int = 42):
         """
         K-Means Clustering class to perform clustering analysis using K-Means algorithm.
 
@@ -179,6 +179,10 @@ class KMeansClustering:
             c="red",
             edgecolor='black'
         )
+        # Remove x-axis and y-axis ticks as they do not provide meaningful insight
+        ax2.set_xticks([])
+        ax2.set_yticks([])
+        
         # Create a legend for the scatter plot
         legend_elements = [Line2D([0], [0], marker='o', color='w', label=label,
                                   markerfacecolor=color, markersize=10) for label, color in zip(labels, cluster_colors)]
