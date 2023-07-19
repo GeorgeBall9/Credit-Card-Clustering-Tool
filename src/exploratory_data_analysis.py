@@ -115,7 +115,15 @@ class EDA:
         sns.scatterplot(data=self.dataset, x='CREDIT_LIMIT', y='INSTALLMENTS_PURCHASES', hue='TENURE', palette=color_palette, ax=ax_main, edgecolor=None)
         ax_main.set_title('Credit Limit vs. Installments Purchases based on Tenure', fontweight='bold', fontsize=20, fontfamily='serif')
         
-        # Make x and y axis labels bold
+        # Adjust font of x and y ticks
+        yticks, ylabels = plt.yticks()
+        xticks, xlabels = plt.xticks()
+        ax_main.set_xticklabels(xlabels, size=14)
+        ax_main.set_yticklabels(ylabels, size=14)
+        
+        # Make x and y axis labels bigger and bold
+        ax_main.xaxis.label.set_fontsize(16)
+        ax_main.yaxis.label.set_fontsize(16)
         ax_main.xaxis.label.set_fontweight('bold')
         ax_main.yaxis.label.set_fontweight('bold')
 
