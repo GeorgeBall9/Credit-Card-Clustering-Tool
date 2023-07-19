@@ -33,15 +33,15 @@ class EDA:
         mask = np.triu(np.ones_like(corr, dtype=bool))  # Create a mask for the upper triangle
 
         fig, ax = plt.subplots(figsize=(24, 18))
-        sns.heatmap(corr, mask=mask, annot=True, fmt=".2f", cmap='mako', linewidths=0.1, cbar=False, annot_kws={"size":14})
+        sns.heatmap(corr, mask=mask, annot=True, fmt=".2f", cmap='mako', linewidths=0.1, cbar=False, annot_kws={"size":18})
         
         yticks, ylabels = plt.yticks()
         xticks, xlabels = plt.xticks()
-        ax.set_xticklabels(xlabels, size=12, fontfamily='serif')
-        ax.set_yticklabels(ylabels, size=12, fontfamily='serif')
+        ax.set_xticklabels(xlabels, size=14, fontfamily='serif')
+        ax.set_yticklabels(ylabels, size=14, fontfamily='serif')
         
         plt.suptitle('Correlation Map of Numerical Variables', fontweight='bold', x=0.327, y=0.96, ha='center', fontsize=18, fontfamily='serif')
-        plt.title('Some variables have significant correlations with other variables (> 0.5).\n', fontsize=12, loc='right', fontfamily='serif')
+        plt.title('Some variables have significant correlations with other variables (> 0.5).\n', fontsize=16, loc='right', fontfamily='serif')
         plt.tight_layout(rect=[0, 0.04, 1, 1.01])
         
         plt.savefig('Plots/EDA/heatmap_correlation.png')  # save the plot as a .png file
@@ -66,7 +66,15 @@ class EDA:
         sns.scatterplot(data=self.dataset, x='CREDIT_LIMIT', y='BALANCE', hue='TENURE', palette=color_palette, ax=ax_main, edgecolor=None)
         ax_main.set_title('Credit Limit vs. Balance based on Tenure', fontweight='bold', fontsize=20, fontfamily='serif')
         
-        # Make x and y axis labels bold
+        # Adjust font of x and y ticks
+        yticks, ylabels = plt.yticks()
+        xticks, xlabels = plt.xticks()
+        ax_main.set_xticklabels(xlabels, size=14)
+        ax_main.set_yticklabels(ylabels, size=14)
+        
+        # Make x and y axis labels bigger and bold
+        ax_main.xaxis.label.set_fontsize(16)
+        ax_main.yaxis.label.set_fontsize(16)
         ax_main.xaxis.label.set_fontweight('bold')
         ax_main.yaxis.label.set_fontweight('bold')
 
