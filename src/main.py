@@ -108,9 +108,9 @@ def train_autoencoder(normalised_dataset):
         # If it doesn't, build and train a new model
         autoencoder = autoencoder_trainer.build_autoencoder()
         print(autoencoder.summary())
-        print("Starting training...")
+        print("\nStarting training...")
         trained_autoencoder = autoencoder_trainer.train_autoencoder(autoencoder)
-        print("Training complete.")
+        print("\nTraining complete.")
         
     autoencoder_trainer.reconstruction_error()
     
@@ -127,7 +127,7 @@ def encode_data(autoencoder_trainer):
     
     # Use the autoencoder to encode the data
     encoded_data = autoencoder_trainer.encode_data(autoencoder_trainer.autoencoder)
-    print("Shape of encoded data:", encoded_data.shape)
+    print("\nShape of encoded data:", encoded_data.shape)
     
     return encoded_data
 
@@ -149,7 +149,7 @@ def apply_kmeans_clustering(encoded_data):
     kmeans_clustering.davies_bouldin_index() 
     kmeans_clustering.cluster_properties()
     kmeans_clustering.visualise_clusters()
-    print(kmeans_clustering.cluster_summary().to_string())
+    print("\n",kmeans_clustering.cluster_summary().to_string())
 
 
 
@@ -175,7 +175,7 @@ def main():
 
     runtime = end_time - start_time  # Calculate the runtime
 
-    print(f"The runtime of the script is {runtime} seconds.")
+    print(f"\nThe runtime of the script is {runtime} seconds.")
     
 if __name__ == "__main__":
     main()

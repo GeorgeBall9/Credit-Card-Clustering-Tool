@@ -80,7 +80,7 @@ class DataPreprocessor:
         
         # Check for missing values in the dataset
         missing_values = dataset.isnull().sum()
-        print("Missing values in each column:\n", missing_values)
+        print("\nMissing values in each column:\n", missing_values)
         
         # Get the list of columns with missing values and their counts
         columns_with_missing_values = missing_values[missing_values > 0]
@@ -161,7 +161,7 @@ class DataPreprocessor:
         
         # Check for missing values again
         missing_values = dataset.isnull().sum()
-        print("Missing values in each column after imputation:\n", missing_values)
+        print("\nMissing values in each column after imputation:\n", missing_values)
 
         
         return dataset
