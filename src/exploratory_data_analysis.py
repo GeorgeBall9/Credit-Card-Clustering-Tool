@@ -107,7 +107,7 @@ class EDA:
         unique_tenures = sorted(self.dataset['TENURE'].unique())
         gs = GridSpec(len(unique_tenures) + 1, 2, width_ratios=[3, 1], figure=fig)
 
-        # Define a color palette
+        # Define a colour palette
         color_palette = sns.color_palette("mako", len(unique_tenures))
 
         # Main scatter plot comparing the CREDIT_LIMIT vs BALANCE based on TENURE
