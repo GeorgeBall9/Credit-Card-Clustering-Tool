@@ -38,10 +38,18 @@ class KMeansClustering:
             max_clusters (int): The maximum number of clusters to consider. Default is 10.
 
         """
+        # Initialize an empty list to store the inertia values
         inertia = []
+        
+        # Loop over a range of cluster numbers from 1 to the maximum number of clusters
         for i in range(1, max_clusters + 1):
+            # Initialize a KMeans model with the current number of clusters
             kmeans = KMeans(n_clusters=i, n_init=10)
+            
+            # Fit the KMeans model to the dataset
             kmeans.fit(self.dataset)
+            
+            # Append the inertia (SSE) of the current model to the list
             inertia.append(kmeans.inertia_)
 
         plt.figure(figsize=(10, 6))
