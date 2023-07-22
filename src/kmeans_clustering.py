@@ -38,12 +38,12 @@ class KMeansClustering:
             max_clusters (int): The maximum number of clusters to consider. Default is 10.
 
         """
-        # Initialize an empty list to store the inertia values
+        # Initialise an empty list to store the inertia values
         inertia = []
-        
+
         # Loop over a range of cluster numbers from 1 to the maximum number of clusters
         for i in range(1, max_clusters + 1):
-            # Initialize a KMeans model with the current number of clusters
+            # Initialise a KMeans model with the current number of clusters
             kmeans = KMeans(n_clusters=i, n_init=10)
             
             # Fit the KMeans model to the dataset
@@ -72,11 +72,22 @@ class KMeansClustering:
             max_clusters (int): The maximum number of clusters to consider. Default is 10.
 
         """
+        
+        # Initialise an empty list to store the silhouette scores
         silhouette_scores = []
+        
+        # Loop over a range of cluster numbers from 2 to the maximum number of clusters
         for i in range(2, max_clusters + 1):  # start from 2 because silhouette score is not defined for 1 cluster
+            # Initialize a KMeans model with the current number of clusters
             kmeans = KMeans(n_clusters=i, n_init=10)
+
+            # Fit the KMeans model to the dataset
             kmeans.fit(self.dataset)
+
+            # Calculate the silhouette score of the current model
             score = silhouette_score(self.dataset, kmeans.labels_)
+
+            # Append the silhouette score to the list
             silhouette_scores.append(score)
 
         plt.figure(figsize=(10, 6))
