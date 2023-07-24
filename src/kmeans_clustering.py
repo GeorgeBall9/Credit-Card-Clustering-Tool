@@ -240,16 +240,19 @@ class KMeansClustering:
             pd.DataFrame: The cluster summary.
 
         """
+        # Create a copy of the dataset
+        dataset_df_copy = self.dataset_df.copy()
+        
         # Add the cluster labels to the dataset
-        self.dataset_df["Cluster"] = self.model.labels_
-        self.dataset_df["Cluster"] = 'Cluster ' + (self.dataset_df["Cluster"] + 1).astype(str)
+        dataset_df_copy["Cluster"] = self.model.labels_
+        dataset_df_copy["Cluster"] = 'Cluster ' + (dataset_df_copy["Cluster"] + 1).astype(str)
 
         # Calculate overall mean
         df_profile_overall = pd.DataFrame()
-        df_profile_overall['Overall'] = self.dataset_df.describe().loc[['mean']].T
+        df_profile_overall['Overall'] = dataset_df_copy.describe().loc[['mean']].T
 
         # Group by cluster labels and calculate mean
-        df_cluster_summary = self.dataset_df.groupby("Cluster").describe().T.reset_index().rename(columns={'level_0': 'Column Name', 'level_1': 'Metrics'})
+        df_cluster_summary = dataset_df_copy.groupby("Cluster").describe().T.reset_index().rename(columns={'level_0': 'Column Name', 'level_1': 'Metrics'})
         df_cluster_summary = df_cluster_summary[df_cluster_summary['Metrics'] == 'mean'].set_index('Column Name')
 
         # Join both dataframes

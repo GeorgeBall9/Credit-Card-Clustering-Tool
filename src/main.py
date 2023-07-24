@@ -149,8 +149,23 @@ def apply_kmeans_clustering(encoded_data):
     kmeans_clustering.davies_bouldin_index() 
     kmeans_clustering.cluster_properties()
     kmeans_clustering.visualise_clusters()
-    print("\n",kmeans_clustering.cluster_summary().to_string())
+    # print("\n",kmeans_clustering.cluster_summary().to_string())
 
+
+def apply_kmeans_clustering_profiling(dataset):
+    """
+    Apply K-means clustering on the normalised data and print cluster summary.
+    Args:
+        normalised_dataset (pandas.DataFrame): The normalised dataset.
+    """
+
+    # Apply K-means clustering
+    kmeans_clustering_profiling = KMeansClustering(dataset)
+
+    kmeans_clustering_profiling.fit_model()
+
+    print("\nCluster profiling of the high-dimensional dataframe:\n")
+    print(kmeans_clustering_profiling.cluster_summary().to_string())
 
 
 def main():
@@ -170,6 +185,8 @@ def main():
     encoded_data = encode_data(autoencoder_trainer)
 
     apply_kmeans_clustering(encoded_data)
+    
+    apply_kmeans_clustering_profiling(dataset)
 
     end_time = time.time()  # Save the current time at the end of your script
 
