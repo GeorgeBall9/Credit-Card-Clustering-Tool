@@ -257,6 +257,16 @@ class KMeansClustering:
 
         # Join both dataframes
         df_profile = df_cluster_summary.join(df_profile_overall).reset_index()
+        
+        # Calculate the sizes of each cluster
+        cluster_sizes = dataset_df_copy["Cluster"].value_counts()
+
+        # Calculate the percentage weights of each cluster
+        cluster_weights = cluster_sizes / len(dataset_df_copy)
+        
+        # Print the size and percentage weight of each cluster
+        for cluster in cluster_weights.index:
+            print(f"{cluster}: Size = {cluster_sizes[cluster]}, Weight = {cluster_weights[cluster]*100:.2f}%\n")
 
         return df_profile
 

@@ -150,7 +150,8 @@ def apply_kmeans_clustering(encoded_data):
     kmeans_clustering.davies_bouldin_index() 
     kmeans_clustering.cluster_properties()
     kmeans_clustering.visualise_clusters()
-    # print("\n",kmeans_clustering.cluster_summary().to_string())
+    print("\nCluster profiling of the two-dimensional dataframe:\n")
+    print("\n",kmeans_clustering.cluster_summary().to_string())
 
 
 def apply_kmeans_clustering_profiling(dataset):
