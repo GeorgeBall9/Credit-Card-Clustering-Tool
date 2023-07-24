@@ -165,7 +165,6 @@ class KMeansClustering:
         labels = ['Cluster 1', 'Cluster 2', 'Cluster 3', 'Cluster 4', 'Cluster 5', 'Centroids']
         title=dict(fontsize=12, fontweight='bold', style='italic', fontfamily='serif')
         text_style=dict(fontweight='bold', fontfamily='serif')
-        scatter_style=dict(linewidth=0.65, edgecolor='#100C07', alpha=0.85)
         legend_style=dict(borderpad=2, frameon=False, fontsize=8)
         
         fig, axs = plt.subplots(2, 2, figsize=(14, 10))
@@ -184,12 +183,17 @@ class KMeansClustering:
         
 
         # Scatter plot of the cluster distributions
+        
+        # map the 'Cluster' labels in your DataFrame to the colors
+        color_dict = {i: color for i, color in enumerate(cluster_colors)}
+        point_colors = self.dataset_df["Cluster"].map(color_dict)
+        
         ax2.scatter(
             self.dataset_df.iloc[:, 0],
             self.dataset_df.iloc[:, 1],
-            c=self.dataset_df["Cluster"],
-            cmap="mako",
-            edgecolor='black'
+            s=10,
+            c=point_colors,
+            edgecolor=None
         )
         ax2.scatter(
             self.model.cluster_centers_[:, 0],
