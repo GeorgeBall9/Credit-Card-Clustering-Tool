@@ -1,3 +1,4 @@
+
 import os
 import time
 from exploratory_data_analysis import EDA
@@ -154,9 +155,9 @@ def apply_kmeans_clustering(encoded_data):
 
 def apply_kmeans_clustering_profiling(dataset):
     """
-    Apply K-means clustering on the normalised data and print cluster summary.
+    Apply K-means clustering on the high-dimensional data and print cluster summary.
     Args:
-        normalised_dataset (pandas.DataFrame): The normalised dataset.
+        dataset (pandas.DataFrame): The original dataset.
     """
 
     # Apply K-means clustering
