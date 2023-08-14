@@ -49,10 +49,6 @@ archive
 todo
 scratchpad
 
-# Ignore GPT Engineer files
-projects
-!projects/example
-
 # Pyenv
 .python-version
 
@@ -60,7 +56,7 @@ projects
 benchmark
 !benchmark/*/prompt
 
-.gpte_consent
+
 Plots/sse_plot.png
 Plots/clusters.png
 TrainedAutoencoder/trained_autoencoder.h5
